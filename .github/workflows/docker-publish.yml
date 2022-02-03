@@ -44,4 +44,4 @@ jobs:
         with:
           context: ./docker
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${env.IMAGE_NAME}:v2.0.0
+          tags: ${{ env.IMAGE_NAME }}:v2.0.0
