@@ -25,7 +25,8 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           tags: |
-            type=semver,pattern=1.0.0
+            type=semver,pattern=1.1.0
+            type=semver,pattern=1.1
       - run: echo ${{ steps.meta.outputs.tags }} 
             
 
