@@ -1,4 +1,4 @@
-name: Docker
+name: Docker-Publish
 
 on:
   push:
@@ -21,7 +21,6 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Log into registry ${{ env.REGISTRY }}
-        if: github.event_name != 'pull_request'
         uses: docker/login-action@28218f9b04b4f3f62068d7b6ce6ca5b26e35336c
         with:
           registry: ${{ env.REGISTRY }}
@@ -30,9 +29,8 @@ jobs:
 
       - run: echo ${{ github.repository }}
       - name: Build and push Docker image
-        id: build-and-push
         uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
         with:
           context: ./docker
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.IMAGE_NAME }}:v1.${{ github.run_number }}
+          tags: ${{ env.IMAGE_NAME }}:latest, ${{ env.IMAGE_NAME }}:v1.${{ github.run_number }}
