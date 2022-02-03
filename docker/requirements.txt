@@ -1,0 +1,5 @@
+awscli
+openshift
+boto3
+boto
+ansible==2.10.7
