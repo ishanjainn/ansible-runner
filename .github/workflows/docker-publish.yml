@@ -1,13 +1,7 @@
 name: Docker
 
 on:
-  schedule:
-    - cron: '21 2 * * *'
   push:
-    branches: [ main ]
-    # Publish semver tags as releases.
-    tags: [ 'v*.*.*' ]
-  pull_request:
     branches: [ main ]
 
 env:
@@ -44,4 +38,4 @@ jobs:
         with:
           context: ./docker
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.IMAGE_NAME }}:v2.0.0
+          tags: ${{ env.IMAGE_NAME }}:v1.${{ github.run_number }}
