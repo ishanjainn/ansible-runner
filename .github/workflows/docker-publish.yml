@@ -39,5 +39,5 @@ jobs:
           name: 'MINOR_VERSION'
           value: 3
           repository: hmanzur/actions-set-secret
-          token: ${{ secrets.REPO_ACCESS_TOKEN }}
+          token: ${{ secrets.GITHUB_TOKEN }}
       - run: echo ${{ secrets.MINOR_VERSION }}
