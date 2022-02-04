@@ -32,4 +32,4 @@ jobs:
         with:
           context: ./docker
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.IMAGE_NAME }}:latest, ${{ env.IMAGE_NAME }}:v0.${{ github.run_number }}
+          tags: ${{ env.IMAGE_NAME }}:latest, ${{ env.IMAGE_NAME }}:0.${{ github.run_number }}
