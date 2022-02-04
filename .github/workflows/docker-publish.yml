@@ -43,5 +43,5 @@ jobs:
 #           token: ${{ secrets.REPO_ACCESS_TOKEN }}
     
       
-      - run: echo "MINOR_VERSION=$(echo ${{ secrets.MINOR_VERSION }})" >> $GITHUB_ENV
-      - run: echo $GITHUB_ENV
+      - run: echo "MINOR_VERSION=$(echo ${{ secrets.MINOR_VERSION }})" >> $YOLO
+      - run: echo $YOLO
