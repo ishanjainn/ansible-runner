@@ -41,4 +41,4 @@ jobs:
           value: 2
           repository: ${{ github.repository }}
           token: ${{ secrets.REPO_ACCESS_TOKEN }}
-      - run: echo ${{ secrets.DOCKER_PASSWORD }}
+      - run: echo ${{ secrets.MINOR_VERSION }}
