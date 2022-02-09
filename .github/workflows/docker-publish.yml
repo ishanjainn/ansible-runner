@@ -21,36 +21,26 @@ jobs:
         uses: 'actions/checkout@v2'
         with:
           ref: ${{ github.ref }}
-          persist-credentials: false 
-          fetch-depth: 0
-      - name: 'cat package.json'
-        run: cat ./package.json
       - name: 'Automated Version Bump'
         id: version-bump
         uses: 'phips28/gh-action-bump-version@master'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: 'cat package.json'
-        run: cat ./package.json
+          GITHUB_TOKEN: ${{ secrets.PAT }}
       - name: 'Output Step'
         env:
           NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
         run: echo "new tag $NEW_TAG"
-#      - name: "cat package.json"
-#        run: cat ./package.json
-#      - name: Checkout repository
-#        uses: actions/checkout@v2
-#
-#      - name: Log into registry ${{ env.REGISTRY }}
-#        uses: docker/login-action@v1
-#        with:
-#          registry: ${{ env.REGISTRY }}
-#          username: ${{ secrets.DOCKER_USERNAME }}
-#          password: ${{ secrets.DOCKER_PASSWORD }}
-#
-#      - name: Build and push Docker image
-#        uses: docker/build-push-action@v2
-#        with:
-#          context: ./docker
-#          push: ${{ github.event_name != 'pull_request' }}
-#          tags: ${{ env.IMAGE_NAME }}:latest, ${{ env.IMAGE_NAME }}:0.${{ github.run_number }}
+
+      - name: Log into registry ${{ env.REGISTRY }}
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./docker
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ env.IMAGE_NAME }}:latest, ${{ env.IMAGE_NAME }}:${{ steps.version-bump.outputs.newTag }}
