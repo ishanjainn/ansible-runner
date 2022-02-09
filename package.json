@@ -2,5 +2,4 @@
   "name": "ansible-runner",
   "version": "0.0.0",
   "repository": "https://github.com/ishanjainn/ansible-runner",
-  "main": "index.js"
 }
