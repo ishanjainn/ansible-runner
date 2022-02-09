@@ -19,6 +19,8 @@ jobs:
     steps:
       - name: "Checkout source code"
         uses: "actions/checkout@v2"
+        with:
+          ref: ${{ github.ref }}
       - name: "cat package.json"
         run: cat ./package.json
       - name: "Setup Node.js"
