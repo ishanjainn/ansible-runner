@@ -21,15 +21,13 @@ jobs:
         uses: "actions/checkout@v2"
         with:
           ref: ${{ github.ref }}
-      - uses: actions/setup-node@v2
+      - name:  'Automated Version Bump'
+        uses:  'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          node-version: '14'
-      - name: "cat package.json"
-        run: cat ./package.json
-      - run: git stash
-      - run: npm version patch
-      - name: "cat package.json"
-        run: cat ./package.json
+          skip-commit:  'true'
+          skip-push: 'true'
 #      - name: "cat package.json"
 #        run: cat ./package.json
 #      - name: Checkout repository
