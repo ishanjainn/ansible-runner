@@ -26,6 +26,7 @@ jobs:
           node-version: '14'
       - name: "cat package.json"
         run: cat ./package.json
+      - run: git stash
       - run: npm version patch
       - name: "cat package.json"
         run: cat ./package.json
