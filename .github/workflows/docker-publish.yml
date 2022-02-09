@@ -1,36 +1,32 @@
-#name: Docker
-#
-#on:
-#  push:
-#    branches: [ main ]
-#
-#env:
-#  REGISTRY: docker.io
-#  IMAGE_NAME: ${{ github.repository }}
-#
-#jobs:
-#  build:
-#    runs-on: ubuntu-latest
-#    permissions:
-#      contents: read
-#      packages: write
-#      id-token: write
-#
-#    steps:
-#      - name: 'Checkout source code'
-#        uses: 'actions/checkout@v2'
-#        with:
-#          ref: ${{ github.ref }}
-#      - name: 'Automated Version Bump'
-#        id: version-bump
-#        uses: 'phips28/gh-action-bump-version@master'
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.PAT }}
-#      - name: 'Output Step'
-#        env:
-#          NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
-#        run: echo "new tag $NEW_TAG"
-#
+name: Docker
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  REGISTRY: docker.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout source code'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+      - name: 'Automated Version Bump'
+        id: version-bump
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT }}
+      - name: 'Output Step'
+        env:
+          NEW_TAG: ${{ steps.version-bump.outputs.newTag }}
+        run: echo "new tag $NEW_TAG"
+
 #      - name: Log into registry ${{ env.REGISTRY }}
 #        uses: docker/login-action@v1
 #        with:
