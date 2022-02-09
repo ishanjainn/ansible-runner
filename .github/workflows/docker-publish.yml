@@ -30,7 +30,7 @@ jobs:
         with:
           tag-prefix: ''
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_ACCESS_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 #      - name: "cat package.json"
 #        run: cat ./package.json
 #      - name: Checkout repository
@@ -49,4 +49,3 @@ jobs:
 #          context: ./docker
 #          push: ${{ github.event_name != 'pull_request' }}
 #          tags: ${{ env.IMAGE_NAME }}:latest, ${{ env.IMAGE_NAME }}:0.${{ github.run_number }}
-
