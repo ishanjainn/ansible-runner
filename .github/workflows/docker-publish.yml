@@ -18,13 +18,14 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Build Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: ./docker
-          push: false
-          tags: ${{ env.IMAGE_NAME }}:testing
+#       - name: Build Docker image
+#         uses: docker/build-push-action@v2
+#         with:
+#           context: ./docker
+#           push: false
+#           tags: ${{ env.IMAGE_NAME }}:testing
 
+      - run: docker build -t ${{ env.IMAGE_NAME }}:testing ./docker
       - run: wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
       - run: k3d registry create ansible.localhost --port 12345
       - run: k3d cluster create --registry-use k3d-ansible.localhost:12345
