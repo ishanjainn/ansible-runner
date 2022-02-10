@@ -4,5 +4,5 @@
 
   tasks:
     - name: Display message
-  debug:
-    msg: "Success"
+      debug:
+        msg: "Success"
