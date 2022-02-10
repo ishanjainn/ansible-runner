@@ -1,0 +1,8 @@
+- name: Integration test for Docker Image
+  connection: local
+  hosts: localhost
+
+  tasks:
+    - name: Display message
+      debug:
+        msg: "Success"
