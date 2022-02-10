@@ -25,7 +25,7 @@ jobs:
           push: false
 
       - name: Run playbook from Docker Image
-        run: docker run -it -v $(pwd):/ansible ${{ env.IMAGE_NAME }} test.yml
+        run: docker run -v $(pwd):/ansible ${{ env.IMAGE_NAME }} test.yml
 
       - name: Automated Version Bump
         id: version-bump
