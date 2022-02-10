@@ -18,14 +18,15 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
-      - name: Build and push Docker image
+      - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
           context: ./docker
           push: false
+          tags: ${{ env.IMAGE_NAME }}:testing
 
       - name: Run playbook from Docker Image
-        run: docker run -v $(pwd):/ansible ${{ env.IMAGE_NAME }} test.yml
+        run: docker run -v $(pwd):/ansible ${{ env.IMAGE_NAME }}:testing test.yml
 
       - name: Automated Version Bump
         id: version-bump
