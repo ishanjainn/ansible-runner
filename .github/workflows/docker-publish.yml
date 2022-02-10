@@ -18,6 +18,15 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./docker
+          push: false
+
+      - name: Run playbook from Docker Image
+        run: docker run -it -v $(pwd):/ansible ${{ env.IMAGE_NAME }} test.yml
+
       - name: Automated Version Bump
         id: version-bump
         uses: 'phips28/gh-action-bump-version@master'
