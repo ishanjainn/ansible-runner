@@ -30,6 +30,7 @@ jobs:
       - run: k3d cluster create --registry-use k3d-ansible.localhost:12345
       - run: docker tag ${{ env.IMAGE_NAME }}:testing k3d-ansible.localhost:12345/ansible-runner:testing
       - run: kubectl run ansible-runner --image k3d-ansible.localhost:12345/ansible-runner:testing
+      - run: kubectl get pods
       
 #       - name: Run playbook from Docker Image
 #         id: ansible
