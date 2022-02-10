@@ -26,8 +26,10 @@ jobs:
           tags: ${{ env.IMAGE_NAME }}:testing
 
       - name: Run playbook from Docker Image
+        id: ansible
         run: docker run -v $(pwd):/ansible ${{ env.IMAGE_NAME }}:testing test.yml
 
+      - run: echo ${{ steps.ansible.outputs }}
       - name: Automated Version Bump
         id: version-bump
         uses: 'phips28/gh-action-bump-version@master'
