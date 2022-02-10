@@ -29,6 +29,7 @@ jobs:
       - run: wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
       - run: k3d registry create ansible.localhost --port 12345
       - run: k3d cluster create --registry-use k3d-ansible.localhost:12345
+      - run: sleep 1m
       - run: docker tag ${{ env.IMAGE_NAME }}:testing k3d-ansible.localhost:12345/ansible-runner:testing
       - run: kubectl run ansible-runner --image k3d-ansible.localhost:12345/ansible-runner:testing
       - run: kubectl get pods
