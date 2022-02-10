@@ -13,32 +13,33 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout source code
-        uses: 'actions/checkout@v2'
-        with:
-          ref: ${{ github.ref }}
+        - run: echo ${GITHUB_REPOSITORY#*/} 
+#       - name: Checkout source code
+#         uses: 'actions/checkout@v2'
+#         with:
+#           ref: ${{ github.ref }}
       
-      - name: Build Docker Image
-        run: docker build -t ${{ env.IMAGE_NAME }}:testing ./docker
+#       - name: Build Docker Image
+#         run: docker build -t ${{ env.IMAGE_NAME }}:testing ./docker
       
-      - name: Install K3D
-        run: wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+#       - name: Install K3D
+#         run: wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
       
-      - name: Create local K3D managed container registry
-        run: k3d registry create ${GITHUB_REPOSITORY#*/}.localhost --port 12345
+#       - name: Create local K3D managed container registry
+#         run: k3d registry create ${GITHUB_REPOSITORY#*/}.localhost --port 12345
       
-      - name: Create K3D cluster
-        run: k3d cluster create --registry-use k3d-${GITHUB_REPOSITORY#*/}.localhost:12345
+#       - name: Create K3D cluster
+#         run: k3d cluster create --registry-use k3d-${GITHUB_REPOSITORY#*/}.localhost:12345
       
-      - name: Sleep for 30s
-        run: sleep 30s
+#       - name: Sleep for 30s
+#         run: sleep 30s
       
-      - name: Tag built Docker image to k3d-resgitsry
-        run: docker tag ${{ env.IMAGE_NAME }}:testing k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
+#       - name: Tag built Docker image to k3d-resgitsry
+#         run: docker tag ${{ env.IMAGE_NAME }}:testing k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
       
-      - run: kubectl run ${GITHUB_REPOSITORY#*/} --image k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
+#       - run: kubectl run ${GITHUB_REPOSITORY#*/} --image k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
       
-      - run: kubectl get pods
+#       - run: kubectl get pods
       
 #       - name: Run playbook from Docker Image
 #         id: ansible
