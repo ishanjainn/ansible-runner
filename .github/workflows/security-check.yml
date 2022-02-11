@@ -1,0 +1,29 @@
+name: Security-Check
+
+on:
+  push:
+
+env:
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+      
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./docker
+          push: false
+          tags: ${{ env.IMAGE_NAME }}:testing
+        
+      - uses: azure/container-scan@v0
+        with:
+          image-name: ${{ env.IMAGE_NAME }}:testing
+          run-quality-checks: false
