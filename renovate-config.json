@@ -1,18 +1,5 @@
 {
-  "extends": [
-    "config:base"
-  ],
-  "ignoreDeps": ["com.github.jk1.dependency-license-report", "org.cyclonedx.bom"],
-  "major": {
-    "dependencyDashboardApproval": true
-  },
-  "enabledManagers": ["nuget"],
-  "packageRules": [
-    {
-      "matchPackagePatterns": ["*"],
-      "matchUpdateTypes": ["minor","patch"],
-      "groupName": "all-minor-patch"
-    }
-  ],
-  "repositories": ["ishanjainn/ansible-runner"],
+  "pip_requirements": {
+    "fileMatch": ["my/specifically-named.file", "\\.requirements$"]
+  }
 }
