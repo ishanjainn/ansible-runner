@@ -83,11 +83,11 @@ jobs:
       - name: Sleep for 1m
         run: sleep 1m
      
-      - name: Get status phase of pod and store in ENV
-        run: echo "KUBERNETES_TEST=$(kubectl get po ansible-runner -o jsonpath="{.status.phase}")" >> $GITHUB_ENV
+      - name: Check if playbook ran succesfully
+        run: echo "ANSIBLE_OUTPUT=$(kubectl logs ${GITHUB_REPOSITORY#*/} | grep Success | tr -d '"' | grep -Po '(^|[ ,])msg:\K[^,]*')" >> $GITHUB_ENV
 
       - name: A/B Check
-        if: ${{ env.KUBERNETES_TEST != 'Running' }}
+        if: ${{ env.ANSIBLE_OUTPUT != 'Success' }}
         uses: actions/github-script@v3
         with:
          script: |
