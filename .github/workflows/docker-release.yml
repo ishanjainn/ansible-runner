@@ -24,8 +24,8 @@ jobs:
         uses: tj-actions/changed-files@v14.5
         with:
           files: |
-            .github
-      - run: echo ${{ steps.changed-files.outputs }}
+            .github/workflows
+      - run: echo ${{ steps.changed-files.outputs.any_changed }}
       
 #       - name: Automated Version Bump
 #         if: steps.verify-changed-files.outputs.files_changed == 'false'
