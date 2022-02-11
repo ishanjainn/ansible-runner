@@ -51,7 +51,7 @@ jobs:
         run: export KUBERNETES_TEST=`kgpo ansible-runner -o jsonpath="{.status.phase}"`
     
       - name: A/B Check
-        if: kgpo ansible-runner -o jsonpath="{.status.phase}" != Running
+        if: kubectl get po ansible-runner -o jsonpath="{.status.phase}" != Running
         uses: actions/github-script@v3
         with:
           script: |
