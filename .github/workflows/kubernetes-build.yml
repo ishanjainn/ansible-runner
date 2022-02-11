@@ -1,7 +1,7 @@
 name: Kubernetes-Build
 
 on:
-  pull_request:
+  push:
 
 env:
   IMAGE_NAME: ${{ github.repository }}
@@ -44,15 +44,50 @@ jobs:
       - name: Deploy image in Kubernetes pod
         run: kubectl run ${GITHUB_REPOSITORY#*/} --image k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
       
-      - name: Sleep for 1m
-        run: sleep 1m
-      
-      - name: Get status phase of pod and store in ENV
-        run: echo "KUBERNETES_TEST=$(kubectl get po ansible-runner -o jsonpath="{.status.phase}")" >> $GITHUB_ENV
+      - name: Assign playbook to ENV Var
+        run: |
+          echo "ANSIBLE_PLAYBOOK=$(cat .github/build-files/test.yml)" >> $GITHUB_ENV
 
-      - name: A/B Check
-        if: ${{ env.KUBERNETES_TEST != 'Running' }}
-        uses: actions/github-script@v5
-        with:
-          script: |
-              core.setFailed('Pod is not in running state')
+      - name: Deploy ConfigMap and kubernetes pod
+        run: | 
+          cat <<EOF | kubectl apply -f -
+          apiVersion: v1
+          kind: ConfigMap
+          metadata:
+            name: ${GITHUB_REPOSITORY#*/}
+            namespace: default
+          data:
+            ${GITHUB_REPOSITORY#*/}.yml: ${ANSIBLE_PLAYBOOK}
+          ---
+          apiVersion: v1
+          kind: Pod
+          metadata:
+            name: ${GITHUB_REPOSITORY#*/}
+            namespace: default
+          spec:
+            containers:
+              - name: ${GITHUB_REPOSITORY#*/}
+                image: k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
+                args:
+                  - ${GITHUB_REPOSITORY#*/}.yml
+                volumeMounts:
+                  - name: ${GITHUB_REPOSITORY#*/}
+                    mountPath: /ansible
+            volumes:
+              - name: ${GITHUB_REPOSITORY#*/}
+                configMap:
+                  name: ${GITHUB_REPOSITORY#*/}
+          EOF
+
+#      - name: Sleep for 1m
+#        run: sleep 1m
+#      
+#      - name: Get status phase of pod and store in ENV
+#        run: echo "KUBERNETES_TEST=$(kubectl get po ansible-runner -o jsonpath="{.status.phase}")" >> $GITHUB_ENV
+#
+#      - name: A/B Check
+#        if: ${{ env.KUBERNETES_TEST != 'Running' }}
+#        uses: actions/github-script@v3
+#        with:
+#          script: |
+#              core.setFailed('Pod is not in running state')
