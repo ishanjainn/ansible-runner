@@ -26,3 +26,4 @@ jobs:
       - uses: azure/container-scan@v0
         with:
           image-name: ${{ env.IMAGE_NAME }}:testing
+          severity-threshold: CRITICAL
