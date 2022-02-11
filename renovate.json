@@ -3,7 +3,7 @@
   "pip_requirements": {
     "fileMatch": ["my/specifically-named.file", "\\.requirements$"]
   },
-  "repositories": ["ishanjainn/ansible-runner"]
+  "repositories": ["ishanjainn/ansible-runner"],
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
