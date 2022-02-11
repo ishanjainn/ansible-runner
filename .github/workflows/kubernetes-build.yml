@@ -47,7 +47,7 @@ jobs:
       - name: Assign playbook to ENV Var
         run: |
           echo "ANSIBLE_PLAYBOOK=$(cat .github/build-files/test.yml)" >> $GITHUB_ENV
-
+      
       - name: Deploy ConfigMap and kubernetes pod
         run: | 
           cat <<EOF | kubectl apply -f -
@@ -57,7 +57,15 @@ jobs:
             name: ${GITHUB_REPOSITORY#*/}
             namespace: default
           data:
-            ${GITHUB_REPOSITORY#*/}.yml: ${ANSIBLE_PLAYBOOK}
+            ${GITHUB_REPOSITORY#*/}.yml: | 
+              - name: Integration test for Docker Image
+                connection: local
+                hosts: localhost
+
+                tasks:
+                  - name: Display message
+                    debug:
+                      msg: "Success"
           ---
           apiVersion: v1
           kind: Pod
@@ -79,15 +87,15 @@ jobs:
                   name: ${GITHUB_REPOSITORY#*/}
           EOF
 
-#      - name: Sleep for 1m
-#        run: sleep 1m
-#      
-#      - name: Get status phase of pod and store in ENV
-#        run: echo "KUBERNETES_TEST=$(kubectl get po ansible-runner -o jsonpath="{.status.phase}")" >> $GITHUB_ENV
-#
-#      - name: A/B Check
-#        if: ${{ env.KUBERNETES_TEST != 'Running' }}
-#        uses: actions/github-script@v3
-#        with:
-#          script: |
-#              core.setFailed('Pod is not in running state')
+      - name: Sleep for 1m
+        run: sleep 1m
+     
+      - name: Get status phase of pod and store in ENV
+        run: echo "KUBERNETES_TEST=$(kubectl get po ansible-runner -o jsonpath="{.status.phase}")" >> $GITHUB_ENV
+
+      - name: A/B Check
+        if: ${{ env.KUBERNETES_TEST != 'Running' }}
+        uses: actions/github-script@v3
+        with:
+         script: |
+             core.setFailed('Pod is not in running state')
