@@ -1,0 +1,28 @@
+name: Docker-Build
+
+on:
+  push:
+
+env:
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+      
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./docker
+          push: false
+          tags: ${{ env.IMAGE_NAME }}:testing
+      
+      - name: Run playbook from Docker Image
+        id: ansible
+        run: docker run -v $(pwd):/ansible ${{ env.IMAGE_NAME }}:testing test.yml
