@@ -41,13 +41,6 @@ jobs:
       - name: Push image to local K3D managed container registry
         run: docker push k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
       
-      - name: Deploy image in Kubernetes pod
-        run: kubectl run ${GITHUB_REPOSITORY#*/} --image k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
-      
-      - name: Assign playbook to ENV Var
-        run: |
-          echo "ANSIBLE_PLAYBOOK=$(cat .github/build-files/test.yml)" >> $GITHUB_ENV
-      
       - name: Deploy ConfigMap and kubernetes pod
         run: | 
           cat <<EOF | kubectl apply -f -
