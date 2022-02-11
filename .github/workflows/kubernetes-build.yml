@@ -52,7 +52,7 @@ jobs:
 
       - name: A/B Check
         if: ${{ env.KUBERNETES_TEST != 'Running' }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v5
         with:
           script: |
               core.setFailed('Pod is not in running state')
