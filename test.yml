@@ -6,3 +6,5 @@
     - name: Display message
       debug:
         msg: "Success"
+    - name: Create ENV Varibale
+      shell: echo "ANSIBLE_TEST=$(echo Success)" >> $GITHUB_ENV
