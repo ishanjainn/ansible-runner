@@ -1,7 +1,7 @@
 name: Security-Check
 
 on:
-  push:
+  pull_request:
 
 env:
   IMAGE_NAME: ${{ github.repository }}
@@ -26,4 +26,3 @@ jobs:
       - uses: azure/container-scan@v0
         with:
           image-name: ${{ env.IMAGE_NAME }}:testing
-          run-quality-checks: false
