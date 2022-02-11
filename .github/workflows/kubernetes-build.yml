@@ -5,6 +5,7 @@ on:
 
 env:
   IMAGE_NAME: ${{ github.repository }}
+  POD_PHASE: Running
 
 jobs:
   build:
@@ -51,7 +52,7 @@ jobs:
         run: echo "KUBERNETES_TEST=$(kubectl get po ansible-runner -o jsonpath="{.status.phase}")" >> $GITHUB_ENV
 
       - name: A/B Check
-        if: ${{ env.KUBERNETES_TEST }} != 'Running'
+        if: ${{ env.KUBERNETES_TEST }} != {{ env.POD_PHASE }}'
         uses: actions/github-script@v3
         with:
           script: |
