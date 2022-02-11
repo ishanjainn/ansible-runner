@@ -1,5 +1,6 @@
 {
   "pip_requirements": {
     "fileMatch": ["my/specifically-named.file", "\\.requirements$"]
-  }
+  },
+   "repositories": ["ishanjainn/ansible-runner"]
 }
