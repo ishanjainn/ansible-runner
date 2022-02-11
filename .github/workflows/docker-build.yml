@@ -57,4 +57,5 @@ jobs:
       - uses: azure/container-scan@v0
         with:
           image-name: ${{ env.IMAGE_NAME }}:testing
-          run-quality-checks: true
+          run-quality-checks: false
+          severity-threshold: CRITICAL
