@@ -52,7 +52,7 @@ jobs:
         run: echo "KUBERNETES_TEST=$(kubectl get po ansible-runner -o jsonpath="{.status.phase}")" >> $GITHUB_ENV
 
       - name: A/B Check
-        if: ${{ env.KUBERNETES_TEST }} != {{ env.POD_PHASE }}'
+        if: ${{ env.KUBERNETES_TEST != 'Running' }}
         uses: actions/github-script@v3
         with:
           script: |
