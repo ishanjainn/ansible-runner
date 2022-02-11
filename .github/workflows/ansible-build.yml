@@ -25,4 +25,4 @@ jobs:
       
       - name: Run playbook from Docker Image
         id: ansible
-        run: docker run -v $(pwd):/ansible ${{ env.IMAGE_NAME }}:testing test.yml
+        run: docker run -v $(pwd):/ansible ${{ env.IMAGE_NAME }}:testing .github/build-files/test.yml

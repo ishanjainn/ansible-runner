@@ -24,8 +24,11 @@ jobs:
         uses: tj-actions/changed-files@v14.5
         with:
           files: |
-            .github/workflows
-      
+            .github
+            renovate.json
+            README.md
+            .idea
+
       - name: Automated Version Bump
         if: steps.changed-files-specific.outputs.any_changed == 'false'
         id: version-bump

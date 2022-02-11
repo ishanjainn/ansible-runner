@@ -1,5 +1,9 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json"
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "pip_requirements": {
+    "fileMatch": ["my/specifically-named.file", "\\.requirements$"]
+  },
+  "repositories": ["ishanjainn/ansible-runner"]
   "packageRules": [
     {
       "matchUpdateTypes": ["minor", "patch", "pin", "digest"],
