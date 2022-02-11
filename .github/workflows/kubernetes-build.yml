@@ -84,7 +84,7 @@ jobs:
         run: sleep 1m
      
       - name: Extract Success key from Pod Logs
-        run: echo "ANSIBLE_OUTPUT=$(kubectl logs ${GITHUB_REPOSITORY#*/} | grep Success | tr -d '"' | grep -Po '(^|[ ,])msg:\K[^,]*' | awk '{$1=$1};1')" >> $GITHUB_ENV
+        run: echo "ANSIBLE_OUTPUT=$(kubectl logs ${GITHUB_REPOSITORY#*/} | tr -d '"' |grep -Po '(^|[ ,])msg:\K[^,]*'| awk '{$1=$1};1')" >> $GITHUB_ENV
 
       - name: A/B Check
         if: ${{ env.ANSIBLE_OUTPUT != 'Success' }}
