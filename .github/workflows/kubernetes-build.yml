@@ -1,7 +1,7 @@
 name: Kubernetes-Build
 
 on:
-  push:
+  pull_request:
 
 env:
   IMAGE_NAME: ${{ github.repository }}
