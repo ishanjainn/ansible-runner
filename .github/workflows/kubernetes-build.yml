@@ -48,11 +48,11 @@ jobs:
         run: sleep 1m
       
       - name: Get status phase of pod and store in ENV
-        run: export KUBERNETES_TEST=`kgpo ansible-runner -o jsonpath="{.status.phase}"`
-    
-      - name: A/B Check
-        if: kubectl get po ansible-runner -o jsonpath="{.status.phase}" != Running
-        uses: actions/github-script@v3
-        with:
-          script: |
-              core.setFailed('envA and envB are not equivalent!')
+        run: echo "KUBERNETES_TEST=$(kubectl get po ansible-runner -o jsonpath="{.status.phase}")" >> $GITHUB_ENV
+      - run: echo $KUBERNETES_TEST
+#       - name: A/B Check
+#         if: kubectl get po ansible-runner -o jsonpath="{.status.phase}" != Running
+#         uses: actions/github-script@v3
+#         with:
+#           script: |
+#               core.setFailed('envA and envB are not equivalent!')
