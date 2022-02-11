@@ -2,4 +2,4 @@ awscli
 openshift
 boto3
 boto
-ansible==2.10.7
+ansible==5.3.0
