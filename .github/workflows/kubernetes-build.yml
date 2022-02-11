@@ -83,8 +83,8 @@ jobs:
       - name: Sleep for 1m
         run: sleep 1m
      
-      - name: Check if playbook ran succesfully
-        run: echo "ANSIBLE_OUTPUT=$(kubectl logs ${GITHUB_REPOSITORY#*/} | grep Success | tr -d '"' | grep -Po '(^|[ ,])msg:\K[^,]*')" >> $GITHUB_ENV
+      - name: Extract Success key from Pod Logs
+        run: echo "ANSIBLE_OUTPUT=$(kubectl logs ${GITHUB_REPOSITORY#*/} | grep Success | tr -d '"' | grep -Po '(^|[ ,])msg:\K[^,]*' | awk '{$1=$1};1')" >> $GITHUB_ENV
 
       - name: A/B Check
         if: ${{ env.ANSIBLE_OUTPUT != 'Success' }}
