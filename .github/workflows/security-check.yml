@@ -1,7 +1,7 @@
 name: Security-Check
 
 on:
-  pull_request:
+  push:
 
 env:
   IMAGE_NAME: ${{ github.repository }}
