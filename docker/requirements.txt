@@ -1,5 +1,5 @@
-awscli
-openshift
-boto3
-boto
+awscli==1.22.53
+openshift==0.13.1
+boto3==1.20.53
+boto==2.49.0
 ansible==5.3.0
