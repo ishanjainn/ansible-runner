@@ -1,0 +1,5 @@
+{
+  "enabledManagers": ["npm"],
+  "pip_requirements": {
+    "fileMatch": ["my/specifically-named.file", "\\.requirements$"]
+}
