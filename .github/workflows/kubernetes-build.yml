@@ -41,25 +41,23 @@ jobs:
       - name: Push image to local K3D managed container registry
         run: docker push k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
       
-      - name: Deploy ConfigMap and kubernetes pod
+      - name: Create configMap with playbook as data
+        run: |
+          cat <<EOF >./kustomization.yaml
+          configMapGenerator:
+          - name: ${GITHUB_REPOSITORY#*/}
+            files:
+            - ${GITHUB_REPOSITORY#*/}.yml=.github/build-files/test.yml
+          generatorOptions:
+            disableNameSuffixHash: true
+          EOF
+      
+      - name: Deploy configMap into the cluster
+        run: kubectl apply -f .
+      
+      - name: Deploy kubernetes pod
         run: | 
           cat <<EOF | kubectl apply -f -
-          apiVersion: v1
-          kind: ConfigMap
-          metadata:
-            name: ${GITHUB_REPOSITORY#*/}
-            namespace: default
-          data:
-            ${GITHUB_REPOSITORY#*/}.yml: | 
-              - name: Integration test for Docker Image
-                connection: local
-                hosts: localhost
-
-                tasks:
-                  - name: Display message
-                    debug:
-                      msg: "Success"
-          ---
           apiVersion: v1
           kind: Pod
           metadata:
