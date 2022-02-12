@@ -1,5 +1,7 @@
 # ansible-runner
-An ansible-runner is a cronjob which can run ansible playbooks from kubernetes configMaps
+A kubernetes runner to run ansible playbooks using kubernetes CronJobs and configMaps.
+This project covers all aspects of CI pipeline from docker build stage to security scans using GitHub Actions
+
 ------
 [![Docker-Release](https://github.com/ishanjainn/ansible-runner/actions/workflows/docker-release.yml/badge.svg)](https://github.com/ishanjainn/ansible-runner/actions/workflows/docker-release.yml)
 [![Kubernetes-Build](https://github.com/ishanjainn/ansible-runner/actions/workflows/kubernetes-build.yml/badge.svg?branch=main)](https://github.com/ishanjainn/ansible-runner/actions/workflows/kubernetes-build.yml)
