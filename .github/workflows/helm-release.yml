@@ -1,8 +1,7 @@
 name: Helm-Release
 
 on:
-  push:
-    branches: [ main ]
+  pull_request:
 
 env:
   REGISTRY: docker.io

@@ -1,18 +1,18 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: $
+  name: ansible-runner
   namespace: default
 spec:
   containers:
-    - name: ${GITHUB_REPOSITORY#*/}
-      image: k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
+    - name: ansible-runner
+      image: k3d-ansible-runner.localhost:12345/ansible-runner:testing
       args:
-        - ${GITHUB_REPOSITORY#*/}.yml
+        - ansible-runner.yml
       volumeMounts:
-        - name: ${GITHUB_REPOSITORY#*/}
+        - name: ansible-runner
           mountPath: /ansible
   volumes:
-    - name: ${GITHUB_REPOSITORY#*/}
+    - name: ansible-runner
       configMap:
-        name: ${GITHUB_REPOSITORY#*/}
+        name: ansible-runner
