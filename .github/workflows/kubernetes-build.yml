@@ -17,6 +17,28 @@ jobs:
         uses: 'actions/checkout@v2'
         with:
           ref: ${{ github.ref }}
+          fetch-depth: 0
+      
+      - name: Get specific changed files
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v14.7
+        with:
+          files: |
+            docker
+            
+      - name: Checkout source code from branch
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+      
+      - name: Checkout source code from main
+        if: steps.changed-files-specific.outputs.any_changed == 'false'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: main
+          fetch-depth: 0
       
       - name: Build Docker image
         uses: docker/build-push-action@v2
