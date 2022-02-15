@@ -33,7 +33,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tag-prefix:  'image-'
+          commit-message: 'CI: Bumps Image version to {{version}}
 
       - name: Output Step
         if: steps.changed-files-specific.outputs.any_changed == 'true'
