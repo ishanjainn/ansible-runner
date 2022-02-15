@@ -1,10 +1,9 @@
 name: Helm-Release
 
 on:
-  pull_request:
+  push:
 
 env:
-  REGISTRY: docker.io
   IMAGE_NAME: ${{ github.repository }}
 
 jobs:
@@ -40,26 +39,29 @@ jobs:
         with:
           path: ./
       
-      - name: remove chart.yml
+      - name: remove Chart.yml
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
         working-directory: charts/ansible-runner
-        run: sudo rm -rf chart.yml
+        run: sudo rm -rf Chart.yaml
 
-      - name: create new chart.yaml
+      - name: create new Chart.yaml
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
         working-directory: charts/ansible-runner
         run: |
-          cat <<EOF > chart.yml
+          cat <<EOF > Chart.yaml
           version: ${{ steps.version-bump.outputs.newTag }}
           name: ${GITHUB_REPOSITORY#*/}
           appVersion: ${{ steps.package-version.outputs.current-version}}
           EOF
 
-      - name: commit the new chart.yml
+      - name: commit the new Chart.yml
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change
 
-#      - build the chart
-#      - push the chart
+      - name: Run chart-releaser
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
+        uses: helm/chart-releaser-action@v1.3.0
+        env:
+          CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
