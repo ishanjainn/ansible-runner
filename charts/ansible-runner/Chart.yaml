@@ -1,5 +1,3 @@
+version: 0.0.1
 name: ansible-runner
-
-version: 0.0.0
 appVersion: 0.0.3
-apiVersion: v2
