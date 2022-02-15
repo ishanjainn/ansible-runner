@@ -42,7 +42,8 @@ jobs:
         run: docker push k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
 
       - name: Build and Install Helm chart
-        run: helm install ansible-runner charts/ansible-runner/
+        working-directory: charts/ansible-runner
+        run: helm install ${GITHUB_REPOSITORY#*/} . --set image.repository=k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/} --set image.tag=testing
 
       - name: Sleep for 1m
         run: sleep 1m
@@ -50,12 +51,12 @@ jobs:
       - name: Get pods
         run: kubectl logs ansible-runner
 
-#      - name: Extract Success key from Pod Logs
-#        run: echo "ANSIBLE_OUTPUT=$(kubectl logs ${GITHUB_REPOSITORY#*/} | tr -d '"' |grep -Po '(^|[ ,])msg:\K[^,]*'| awk '{$1=$1};1')" >> $GITHUB_ENV
-#
-#      - name: A/B Check
-#        if: ${{ env.ANSIBLE_OUTPUT != 'Success' }}
-#        uses: actions/github-script@v6
-#        with:
-#          script: |
-#            core.setFailed('Pod is not in running state')
+      - name: Extract Success key from Pod Logs
+        run: echo "ANSIBLE_OUTPUT=$(kubectl logs ${GITHUB_REPOSITORY#*/} | tr -d '"' |grep -Po '(^|[ ,])msg:\K[^,]*'| awk '{$1=$1};1')" >> $GITHUB_ENV
+
+      - name: A/B Check
+        if: ${{ env.ANSIBLE_OUTPUT != 'Success' }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed('Pod is not in running state')

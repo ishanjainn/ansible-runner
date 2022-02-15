@@ -1,18 +1,20 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: ansible-runner
-  namespace: default
+  name: {{ default "ansible-runner"  .Values.name }}
+  namespace: {{ default "default"  .Values.namespace }}
+  labels:
+    app: {{ default "ansible-runner"  .Values.name }}
 spec:
   containers:
-    - name: ansible-runner
-      image: k3d-ansible-runner.localhost:12345/ansible-runner:testing
+    - name: {{ default "ansible-runner"  .Values.name }}
+      image: {{ default "ishanjainn/ansible-runner" .Values.image.repository }}:{{ default (include "argo-cd.defaultTag" .) .Values.image.tag }}
       args:
-        - ansible-runner.yml
+        - {{ default "ansible-runner" .Values.configmap.name }}.yml
       volumeMounts:
-        - name: ansible-runner
+        - name: {{ default "ansible-runner"  .Values.configmap.name }}
           mountPath: /ansible
   volumes:
-    - name: ansible-runner
+    - name: {{ default "ansible-runner"  .Values.configmap.name }}
       configMap:
-        name: ansible-runner
+        name: {{ default "ansible-runner"  .Values.configmap.name }}

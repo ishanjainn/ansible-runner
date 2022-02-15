@@ -40,22 +40,22 @@ jobs:
         with:
           path: ./
       
-      - name: remove chart.yaml
+      - name: remove chart.yml
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
         working-directory: charts/ansible-runner
-        run: sudo rm -rf chart.yaml
+        run: sudo rm -rf chart.yml
 
       - name: create new chart.yaml
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
         working-directory: charts/ansible-runner
         run: |
-          cat <<EOF > chart.yaml
+          cat <<EOF > chart.yml
           version: ${{ steps.version-bump.outputs.newTag }}
           name: ${GITHUB_REPOSITORY#*/}
           appVersion: ${{ steps.package-version.outputs.current-version}}
           EOF
 
-      - name: commit the new chart.yaml
+      - name: commit the new chart.yml
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:

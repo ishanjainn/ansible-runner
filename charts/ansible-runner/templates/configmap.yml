@@ -1,15 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: ansible-runner
-  namespace: default
+  name: {{ default "ansible-runner" .Values.configmap.name }}
+  namespace: {{ default "default" .Values.namespace }}
 data:
-  ansible-runner.yml: |
-    - name: Integration test for Docker Image
-      connection: local
-      hosts: localhost
-      
-      tasks:
-        - name: Display message
-          debug:
-            msg: "Success"
+  {{ default "ansible-runner" .Values.configmap.name }}.yml: {{ .Values.playbook | quote }}
