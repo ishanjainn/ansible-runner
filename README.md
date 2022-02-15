@@ -1,6 +1,6 @@
 # ansible-runner
 A kubernetes runner to run ansible playbooks using kubernetes CronJobs and configMaps.
-This project covers all aspects of CI pipeline including ansible-build check, kubernetes-build check, Security scans for Docker Image using GitHub Actions. This project has auto dependency updates enabled using Renovate.
+This project covers all aspects of CI pipeline including ansible-build check, kubernetes-build check, Security scans for Docker Image using GitHub Actions. This project has auto dependency updates enabled using Renovate
 
 ------
 [![Docker-Release](https://github.com/ishanjainn/ansible-runner/actions/workflows/docker-release.yml/badge.svg)](https://github.com/ishanjainn/ansible-runner/actions/workflows/docker-release.yml)
