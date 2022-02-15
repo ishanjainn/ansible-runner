@@ -1,9 +1,7 @@
-name: Kubernetes-Build
+name: Helm-Build
 
 on:
-  push:
-    branches:
-      - main
+  pull_request:
 
 env:
   CHART_NAME: ${{ github.repository }}
