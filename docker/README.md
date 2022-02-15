@@ -1,6 +1,6 @@
 # ansible-runner
 
-Image which can be used to run basic ansible playbooks which don't need extra collections apart from the ones avaiable with default ansible installation
+This Image can be used to run basic ansible playbooks which don't require extra collections apart from the ones avaiable with default ansible installation
 
 ### Steps:
 - Pull the image from DockerHub<br>
