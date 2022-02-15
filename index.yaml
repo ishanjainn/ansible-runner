@@ -3,6 +3,14 @@ entries:
   ansible-runner:
   - apiVersion: v1
     appVersion: 0.0.3
+    created: "2022-02-15T12:39:55.010733677Z"
+    digest: 616f2837eade8936e22aa42d6e75528d1d1a7579bf517ff8da1c550f6375100b
+    name: ansible-runner
+    urls:
+    - https://github.com/ishanjainn/ansible-runner/releases/download/ansible-runner-0.0.10/ansible-runner-0.0.10.tgz
+    version: 0.0.10
+  - apiVersion: v1
+    appVersion: 0.0.3
     created: "2022-02-15T12:22:04.866711822Z"
     digest: 3dab671658e257033c20d1245c43e8b15a115d06f4dede313557c6575543441b
     name: ansible-runner
@@ -25,4 +33,4 @@ entries:
     urls:
     - https://github.com/ishanjainn/ansible-runner/releases/download/ansible-runner-0.0.1/ansible-runner-0.0.1.tgz
     version: 0.0.1
-generated: "2022-02-15T12:36:57.634915155Z"
+generated: "2022-02-15T12:39:55.010854676Z"
