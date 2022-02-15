@@ -74,7 +74,7 @@ jobs:
         run: sleep 1m
 
       - name: Get pods
-        run: kubectl logs ansible-runner
+        run: kubectl logs ${GITHUB_REPOSITORY#*/}
 
       - name: Extract Success key from Pod Logs
         run: echo "ANSIBLE_OUTPUT=$(kubectl logs ${GITHUB_REPOSITORY#*/} | tr -d '"' |grep -Po '(^|[ ,])msg:\K[^,]*'| awk '{$1=$1};1')" >> $GITHUB_ENV
