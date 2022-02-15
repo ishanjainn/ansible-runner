@@ -32,6 +32,7 @@ jobs:
         uses: 'phips28/gh-action-bump-version@master'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: charts
 
       - name: remove chart.yaml
         if: steps.changed-files-specific.outputs.any_changed == 'true'
@@ -48,6 +49,9 @@ jobs:
 
       - name: commit the new chart.yaml
         if: steps.changed-files-specific.outputs.any_changed == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automated Change
 
 #      - build the chart
 #      - push the chart
