@@ -1,10 +1,14 @@
 name: ansible-runner
+
 namespace: default
+
 image:
   repository: ishanjainn/ansible-runner
   tag: ""
+
 configmap:
   name: ansible-runner
+
 playbook: |
   - name: Integration test for Docker Image
     connection: local
