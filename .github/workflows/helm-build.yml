@@ -2,9 +2,6 @@ name: Helm-Build
 
 on:
   pull_request:
-  push:
-    branches:
-      - main
   schedule:
     - cron: '*/60 */12 * * *'
 
@@ -28,6 +25,20 @@ jobs:
         with:
           files: |
             docker
+      
+      - name: Checkout source code from branch
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+      
+      - name: Checkout source code from main
+        if: steps.changed-files-specific.outputs.any_changed == 'false'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: main
+          fetch-depth: 0
       
       - name: Build Docker image
         uses: docker/build-push-action@v2
@@ -54,6 +65,12 @@ jobs:
       - name: Push image to local K3D managed container registry
         run: docker push k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
 
+      - name: Checkout source code
+        if: steps.changed-files-specific.outputs.any_changed == 'false'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+      
       - name: Lint check for Helm chart
         working-directory: charts/ansible-runner
         run: helm lint .
