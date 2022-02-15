@@ -1,4 +1,4 @@
-# Ansible
+# ansible-runner
 
 Image which can be used to run basic ansible playbooks which do not need extra collections apart from the ones avaiable with default installations
 
