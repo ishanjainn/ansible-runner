@@ -4,7 +4,7 @@ on:
   push:
 
 env:
-  CHART_NAME: ${{ github.repository }}
+  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   build:
