@@ -42,7 +42,7 @@ jobs:
 #        run: docker push k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
 
       - name: Build and Install Helm chart
-        run: helm install ansible-runner /charts/ansible-runner
+        run: helm install ansible-runner charts/ansible-runner
 
       - name: Sleep for 1m
         run: sleep 1m
