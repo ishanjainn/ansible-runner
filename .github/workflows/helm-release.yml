@@ -54,8 +54,9 @@ jobs:
         working-directory: charts/ansible-runner
         run: |
           cat <<EOF > Chart.yaml
-          version: ${{ steps.version-bump.outputs.newTag }}
           name: ${GITHUB_REPOSITORY#*/}
+          apiVersion: v2
+          version: ${{ steps.version-bump.outputs.newTag }}
           appVersion: ${{ steps.package-version.outputs.current-version}}
           EOF
 
