@@ -27,7 +27,7 @@ jobs:
             charts/${GITHUB_REPOSITORY#*/}
 
       - name: Automated Version Bump
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
         id: version-bump
         uses: 'phips28/gh-action-bump-version@master'
         env:
@@ -35,12 +35,12 @@ jobs:
           PACKAGEJSON_DIR: charts
 
       - name: remove chart.yaml
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
         working-directory: charts/${GITHUB_REPOSITORY#*/}
         run: sudo rm -rf chart.yml
 
       - name: create new chart.yaml
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
         working-directory: charts/${GITHUB_REPOSITORY#*/}
         run: |
           cat <<EOF > chart.yml
@@ -48,7 +48,7 @@ jobs:
           EOF
 
       - name: commit the new chart.yaml
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change
