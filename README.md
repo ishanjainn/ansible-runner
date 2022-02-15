@@ -8,3 +8,4 @@ This project covers all aspects of CI pipeline including ansible-build check, ku
 [![Ansible-Build](https://github.com/ishanjainn/ansible-runner/actions/workflows/ansible-build.yml/badge.svg)](https://github.com/ishanjainn/ansible-runner/actions/workflows/ansible-build.yml)
 [![Security-Check](https://github.com/ishanjainn/ansible-runner/actions/workflows/security-check.yml/badge.svg)](https://github.com/ishanjainn/ansible-runner/actions/workflows/security-check.yml)
 [![Renovate](https://github.com/ishanjainn/ansible-runner/actions/workflows/renovate.yml/badge.svg)](https://github.com/ishanjainn/ansible-runner/actions/workflows/renovate.yml)
+[![Helm-Build](https://github.com/ishanjainn/ansible-runner/actions/workflows/helm-build.yml/badge.svg)](https://github.com/ishanjainn/ansible-runner/actions/workflows/helm-build.yml)
