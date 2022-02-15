@@ -1,0 +1,59 @@
+name: Kubernetes-Build
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  CHART_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Build Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: ./docker
+          push: false
+          tags: ${{ env.IMAGE_NAME }}:testing
+
+      - name: Install K3D
+        run: wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+
+      - name: Create local K3D managed container registry
+        run: k3d registry create ${GITHUB_REPOSITORY#*/}.localhost --port 12345
+
+      - name: Create K3D cluster
+        run: k3d cluster create --registry-use k3d-${GITHUB_REPOSITORY#*/}.localhost:12345
+
+      - name: Sleep for 30s
+        run: sleep 30s
+
+      - name: Tag built Docker image to be used k3d-resgitry
+        run: docker tag ${{ env.IMAGE_NAME }}:testing k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
+
+      - name: Push image to local K3D managed container registry
+        run: docker push k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
+
+
+
+      - name: Sleep for 1m
+        run: sleep 1m
+
+      - name: Extract Success key from Pod Logs
+        run: echo "ANSIBLE_OUTPUT=$(kubectl logs ${GITHUB_REPOSITORY#*/} | tr -d '"' |grep -Po '(^|[ ,])msg:\K[^,]*'| awk '{$1=$1};1')" >> $GITHUB_ENV
+
+      - name: A/B Check
+        if: ${{ env.ANSIBLE_OUTPUT != 'Success' }}
+        uses: actions/github-script@v6
+        with:
+          script: |
+            core.setFailed('Pod is not in running state')

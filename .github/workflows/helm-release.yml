@@ -1,0 +1,53 @@
+name: Helm-Release
+
+on:
+  push:
+    branches: [ main ]
+
+env:
+  REGISTRY: docker.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+          fetch-depth: 0
+
+      - name: Get specific changed files
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v14.7
+        with:
+          files: |
+            charts/${GITHUB_REPOSITORY#*/}
+
+      - name: Automated Version Bump
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        id: version-bump
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: remove chart.yaml
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        working-directory: charts/${GITHUB_REPOSITORY#*/}
+        run: sudo rm -rf chart.yml
+
+      - name: create new chart.yaml
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        working-directory: charts/${GITHUB_REPOSITORY#*/}
+        run: |
+          cat <<EOF > chart.yml
+          test: 23
+          EOF
+
+      - name: commit the new chart.yaml
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+
+#      - build the chart
+#      - push the chart
