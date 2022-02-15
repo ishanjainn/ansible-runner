@@ -28,7 +28,7 @@ jobs:
             charts/${GITHUB_REPOSITORY#*/}
 
       - name: Automated Version Bump
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        if: steps.changed-files-specific.outputs.any_modified == 'true'
         id: version-bump
         uses: 'phips28/gh-action-bump-version@master'
         env:
@@ -38,19 +38,19 @@ jobs:
           skip-tag:  'true'
 
       - name: Get app version
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        if: steps.changed-files-specific.outputs.any_modified == 'true'
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
         with:
           path: ./
       
       - name: remove Chart.yml
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        if: steps.changed-files-specific.outputs.any_modified == 'true'
         working-directory: charts/ansible-runner
         run: sudo rm -rf Chart.yaml
 
       - name: create new Chart.yaml
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        if: steps.changed-files-specific.outputs.any_modified == 'true'
         working-directory: charts/ansible-runner
         run: |
           cat <<EOF > Chart.yaml
@@ -60,13 +60,13 @@ jobs:
           EOF
 
       - name: commit the new Chart.yml
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        if: steps.changed-files-specific.outputs.any_modified == 'true'
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Automated Change
 
       - name: Run chart-releaser
-        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        if: steps.changed-files-specific.outputs.any_modified == 'true'
         uses: helm/chart-releaser-action@v1.3.0
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
