@@ -25,7 +25,7 @@ jobs:
         uses: tj-actions/changed-files@v14.7
         with:
           files: |
-            charts/${GITHUB_REPOSITORY#*/}
+            charts/ansible-runner
 
       - name: Automated Version Bump
         if: steps.changed-files-specific.outputs.any_modified == 'true'
