@@ -1,6 +1,6 @@
 {
   "name": "ansible-runner",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ishanjainn/ansible-runner.git"
