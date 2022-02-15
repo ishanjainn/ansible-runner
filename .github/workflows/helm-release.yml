@@ -43,13 +43,13 @@ jobs:
       - name: remove chart.yaml
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
         working-directory: charts/ansible-runner
-        run: sudo rm -rf chart.yml
+        run: sudo rm -rf chart.yaml
 
       - name: create new chart.yaml
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
         working-directory: charts/ansible-runner
         run: |
-          cat <<EOF > chart.yml
+          cat <<EOF > chart.yaml
           version: ${{ steps.version-bump.outputs.newTag }}
           name: ${GITHUB_REPOSITORY#*/}
           appVersion: ${{ steps.package-version.outputs.current-version}}
