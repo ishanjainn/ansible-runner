@@ -2,6 +2,8 @@ name: Helm-Release
 
 on:
   push:
+    branches:
+      - main
 
 env:
   IMAGE_NAME: ${{ github.repository }}
