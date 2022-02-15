@@ -12,4 +12,4 @@ playbook: |
     tasks:
       - name: Display message
         debug:
-          msg: "Success1"
+          msg: "Success"
