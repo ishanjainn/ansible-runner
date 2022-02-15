@@ -34,7 +34,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag-prefix:  'image-'
-          commit-message: 'CI: Bump Image version to {{version#*-}}'
 
       - name: Output Step
         if: steps.changed-files-specific.outputs.any_changed == 'true'
