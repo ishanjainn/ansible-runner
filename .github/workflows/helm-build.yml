@@ -16,6 +16,25 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
+      - name: Get specific changed files
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v14.7
+        with:
+          files: |
+            docker
+
+      - name: Checkout pull_request branch
+        if: steps.changed-files-specific.outputs.any_changed == 'true'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
+
+      - name: Checkout 'main' branch
+        if: steps.changed-files-specific.outputs.any_changed == 'false'
+        uses: 'actions/checkout@v2'
+        with:
+          ref: main
+
       - name: Build Docker image
         uses: docker/build-push-action@v2
         with:
@@ -23,8 +42,8 @@ jobs:
           push: false
           tags: ${{ env.IMAGE_NAME }}:testing
 
-#      - name: Install K3D
-#        run: wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
+      - name: Install K3D
+        run: wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh | bash
 
       - name: Create local K3D managed container registry
         run: k3d registry create ${GITHUB_REPOSITORY#*/}.localhost --port 12345
@@ -40,6 +59,11 @@ jobs:
 
       - name: Push image to local K3D managed container registry
         run: docker push k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/}:testing
+
+      - name: Checkout pull_request branch
+        uses: 'actions/checkout@v2'
+        with:
+          ref: ${{ github.ref }}
 
       - name: Build and Install Helm chart
         working-directory: charts/ansible-runner
