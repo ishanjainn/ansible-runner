@@ -33,7 +33,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PACKAGEJSON_DIR: charts
-          tag-prefix:  'chart-'
+          skip-tag:  'true'
 
       - name: remove chart.yaml
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
