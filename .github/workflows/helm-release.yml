@@ -42,7 +42,7 @@ jobs:
 
       - name: create new chart.yaml
 #         if: steps.changed-files-specific.outputs.any_changed == 'true'
-        working-directory: charts/${GITHUB_REPOSITORY#*/}
+        working-directory: charts/ansible-runner
         run: |
           cat <<EOF > chart.yml
           test: 23
