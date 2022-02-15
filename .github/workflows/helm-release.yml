@@ -36,6 +36,7 @@ jobs:
           PACKAGEJSON_DIR: charts
         with:
           skip-tag:  'true'
+          commit-message: 'CI: Bump Helm chart version to {{version}}'
 
       - name: Get app version
         if: steps.changed-files-specific.outputs.any_modified == 'true'
