@@ -1,0 +1,12 @@
+apiVersion: v1
+entries:
+  ansible-runner:
+  - apiVersion: v2
+    appVersion: 0.0.3
+    created: "2022-02-15T13:22:57.077019415Z"
+    digest: 0201bf8c5064337c3d9fb87026e38621b1780c22677d04d803b0e6a823dfacd0
+    name: ansible-runner
+    urls:
+    - https://github.com/ishanjainn/ansible-runner/releases/download/ansible-runner-0.0.1/ansible-runner-0.0.1.tgz
+    version: 0.0.1
+generated: "2022-02-15T13:22:57.077063315Z"
