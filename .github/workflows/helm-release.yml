@@ -19,49 +19,48 @@ jobs:
           ref: ${{ github.ref }}
           fetch-depth: 0
 
-#       - name: Get specific changed files
-#         id: changed-files-specific
-#         uses: tj-actions/changed-files@v14.7
-#         with:
-#           files: |
-#             charts/${GITHUB_REPOSITORY#*/}
+      - name: Get specific changed files
+        id: changed-files-specific
+        uses: tj-actions/changed-files@v14.7
+        with:
+          files: |
+            charts/${GITHUB_REPOSITORY#*/}
 
-#       - name: Automated Version Bump
-# #         if: steps.changed-files-specific.outputs.any_changed == 'true'
-#         id: version-bump
-#         uses: 'phips28/gh-action-bump-version@master'
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           PACKAGEJSON_DIR: charts
-#           skip-tag:  'true'
+      - name: Automated Version Bump
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
+        id: version-bump
+        uses: 'phips28/gh-action-bump-version@master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PACKAGEJSON_DIR: charts
+          skip-tag:  'true'
 
-      - name: get-app-version
+      - name: Get app version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
         with:
           path: ./
       
-      - run: echo ${{ steps.package-version.outputs.current-version}}
-#       - name: remove chart.yaml
-# #         if: steps.changed-files-specific.outputs.any_changed == 'true'
-#         working-directory: charts/ansible-runner
-#         run: sudo rm -rf chart.yml
+      - name: remove chart.yaml
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
+        working-directory: charts/ansible-runner
+        run: sudo rm -rf chart.yml
 
-#       - name: create new chart.yaml
-# #         if: steps.changed-files-specific.outputs.any_changed == 'true'
-#         working-directory: charts/ansible-runner
-#         run: |
-#           cat <<EOF > chart.yml
-#           version: ${{ steps.version-bump.outputs.newTag }}
-#           name: ${GITHUB_REPOSITORY#*/}
-#           appVersion: 
-#           EOF
+      - name: create new chart.yaml
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
+        working-directory: charts/ansible-runner
+        run: |
+          cat <<EOF > chart.yml
+          version: ${{ steps.version-bump.outputs.newTag }}
+          name: ${GITHUB_REPOSITORY#*/}
+          appVersion: ${{ steps.package-version.outputs.current-version}}
+          EOF
 
-#       - name: commit the new chart.yaml
-# #         if: steps.changed-files-specific.outputs.any_changed == 'true'
-#         uses: stefanzweifel/git-auto-commit-action@v4
-#         with:
-#           commit_message: Automated Change
+      - name: commit the new chart.yaml
+#         if: steps.changed-files-specific.outputs.any_changed == 'true'
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Automated Change
 
 #      - build the chart
 #      - push the chart
