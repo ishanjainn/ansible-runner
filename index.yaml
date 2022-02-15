@@ -17,4 +17,12 @@ entries:
     urls:
     - https://github.com/ishanjainn/ansible-runner/releases/download/ansible-runner-0.0.8/ansible-runner-0.0.8.tgz
     version: 0.0.8
-generated: "2022-02-15T12:22:04.866720222Z"
+  - apiVersion: v1
+    appVersion: 0.0.3
+    created: "2022-02-15T12:36:57.634885952Z"
+    digest: 6f01f7c2230b0a919558df02006c07749fc76e301359546bd98296c6e9ac12e2
+    name: ansible-runner
+    urls:
+    - https://github.com/ishanjainn/ansible-runner/releases/download/ansible-runner-0.0.1/ansible-runner-0.0.1.tgz
+    version: 0.0.1
+generated: "2022-02-15T12:36:57.634915155Z"
