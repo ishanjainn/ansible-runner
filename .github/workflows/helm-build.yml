@@ -66,13 +66,17 @@ jobs:
         with:
           ref: ${{ github.ref }}
 
+      - name: Lint check for Helm chart
+        working-directory: charts/ansible-runner
+        run: helm lint .
+      
       - name: Build and Install Helm chart
         working-directory: charts/ansible-runner
         run: helm install ${GITHUB_REPOSITORY#*/} . --set image.repository=k3d-${GITHUB_REPOSITORY#*/}.localhost:12345/${GITHUB_REPOSITORY#*/} --set image.tag=testing
 
       - name: Sleep for 1m
         run: sleep 1m
-
+      
       - name: Get pods
         run: kubectl logs ${GITHUB_REPOSITORY#*/}
 
