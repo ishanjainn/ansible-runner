@@ -69,7 +69,7 @@ Within minutes, logs should begin to be available in Grafana Cloud. To test this
 At the top of the page, use the dropdown menu to select your Loki logs data source.
 In the Log Browser, Run the query `{job="postgresql"}`
 
-![Alternate image text](https://drive.google.com/file/d/1hOFkoSfsu8xPnFIEGkliwv_d_4UWCn2t/view?usp=sharing)
+![Alternate image text](https://drive.google.com/uc?export=view&id=1hOFkoSfsu8xPnFIEGkliwv_d_4UWCn2t)
 
 If no log labels appear, logs are not being collected. If labels are listed, this confirms that logs are being received.
 
