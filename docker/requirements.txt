@@ -1,5 +1,5 @@
 awscli==1.22.66
 openshift==0.13.1
-boto3==1.21.9
+boto3==1.21.11
 boto==2.49.0
 ansible==5.4.0
