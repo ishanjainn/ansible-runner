@@ -1,4 +1,4 @@
-awscli==1.22.66
+awscli==1.22.68
 openshift==0.13.1
 boto3==1.21.11
 boto==2.49.0
